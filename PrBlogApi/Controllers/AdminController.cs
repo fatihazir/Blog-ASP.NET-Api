@@ -12,25 +12,14 @@ namespace PrBlogApi.Controllers
     public class AdminController : ApiController
     {
         [HttpGet]
-        public HttpResponseMessage Login(Admin entity)
+        public HttpResponseMessage Login()
         {
             try
             {
                 BlogForPrContext db = new BlogForPrContext();
                 Admin admin = db.Admin.FirstOrDefault();
 
-                bool passwordIsCorrect = false;
-
-                if (admin.Password == entity.Password)
-                {
-                    passwordIsCorrect = true;
-                    return Request.CreateResponse(HttpStatusCode.OK, passwordIsCorrect);
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, passwordIsCorrect);
-                }
-                
+                return Request.CreateResponse(HttpStatusCode.OK, admin.Password);
             }
             catch (Exception ex)
             {
