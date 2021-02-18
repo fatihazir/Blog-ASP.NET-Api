@@ -23,7 +23,8 @@ namespace PrBlogApi.Controllers
                    i.Info,
                    i.Text,
                    i.DatetimeOfCreated,
-                   CategoryName = i.Categories.CategoryName
+                   CategoryName = i.Categories.CategoryName,
+                   CategoryId = i.CategoryId
                }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, posts);
@@ -50,7 +51,8 @@ namespace PrBlogApi.Controllers
                     i.Info,
                     i.Text,
                     i.DatetimeOfCreated,
-                    CategoryName = i.Categories.CategoryName
+                    CategoryName = i.Categories.CategoryName,
+                    CategoryId = i.CategoryId
                 }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, posts);
