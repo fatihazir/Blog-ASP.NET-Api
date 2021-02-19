@@ -28,7 +28,7 @@ namespace PrBlogApi.Controllers
             }
         }
         [HttpPost]
-        public string ChangePassword(AdminPasswordChange entity)
+        public string ChangePassword(Admin entity)
         {
             try
             {
@@ -37,13 +37,12 @@ namespace PrBlogApi.Controllers
 
                 int result = 0;
 
-                if (tempAdmin.Password == entity.OldPassword)
-                {
-                    tempAdmin.Password = entity.NewPassword;
+                
+                    tempAdmin.Password = entity.Password;
                     result = db.SaveChanges();
-                }
+                
 
-                return result == 1 ? "Password updated!" : "Old password is incorrect.";
+                return result == 1 ? "Password updated!" : "Error";
 
             }
             catch (Exception ex)
