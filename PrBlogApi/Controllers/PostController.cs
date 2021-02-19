@@ -23,8 +23,8 @@ namespace PrBlogApi.Controllers
                    i.Info,
                    i.Text,
                    i.DatetimeOfCreated,
-                   CategoryName = i.Categories.CategoryName,
-                   CategoryId = i.CategoryId
+                   i.CategoryId,
+                   i.Categories.CategoryName
                }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, posts);
@@ -36,30 +36,58 @@ namespace PrBlogApi.Controllers
             }
         }
 
-        //func overload
 
         [HttpGet]
-        public HttpResponseMessage Posts(int id)
+        public HttpResponseMessage Post(int id)
         {
             try
             {
                 BlogForPrContext db = new BlogForPrContext();
-                var posts = db.Categories.Find(id).Posts.Select(i => new
+                var result = db.Posts.Find(id);
+
+                Posts post = new Posts()
+                {
+                    Id = result.Id,
+                    Title = result.Title,
+                    Info = result.Info,
+                    Text = result.Text,
+                    CategoryId = result.CategoryId,
+                    DatetimeOfCreated = result.DatetimeOfCreated
+                };
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, post);
+            }
+            catch (Exception ex)
+            {
+                string msg = "A problem caused during getting posts by id. Exception message : " + ex.Message;
+                return Request.CreateResponse(HttpStatusCode.OK, msg);
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage PostByCategory(int id)
+        {
+            try
+            {
+                BlogForPrContext db = new BlogForPrContext();
+                var result = db.Categories.Find(id).Posts.Select(i => new
                 {
                     i.Id,
                     i.Title,
                     i.Info,
                     i.Text,
                     i.DatetimeOfCreated,
-                    CategoryName = i.Categories.CategoryName,
-                    CategoryId = i.CategoryId
+                    i.CategoryId,
+                    i.Categories.CategoryName
                 }).ToList();
 
-                return Request.CreateResponse(HttpStatusCode.OK, posts);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                string msg = "A problem caused during getting posts by its category. Exception message : " + ex.Message;
+                string msg = "A problem caused during getting posts by id. Exception message : " + ex.Message;
                 return Request.CreateResponse(HttpStatusCode.OK, msg);
             }
         }
