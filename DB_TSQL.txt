@@ -1,0 +1,21 @@
+CREATE TABLE Categories
+(
+Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+CategoryName nvarchar(30) NOT NULL
+)
+
+CREATE TABLE Posts
+(
+Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+Title nvarchar(100),
+Info text,
+Text text,
+DatetimeOfCreated datetime default GETDATE(),
+CategoryId int foreign key references Categories(Id)
+)
+
+CREATE TABLE Admin
+(
+Id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+Password text 
+)
